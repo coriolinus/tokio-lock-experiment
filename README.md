@@ -36,6 +36,26 @@ Yes, this project works properly both with either `tokio` or `async-lock` featur
 
 The difference is measurable--about 1.1x--but not significant.
 
+## Is there a significant build-size difference?
+
+```sh
+$ cargo build --release --no-default-features --features tokio && mv target/release/tokio-lock-experiment ex.tokio
+   Compiling tokio-lock-experiment v0.1.0 (/home/coriolinus/projects/coriolinus/tokio-lock-experiment)
+    Finished `release` profile [optimized] target(s) in 6.38s
+$ cargo build --release --no-default-features --features async-lock && mv target/release/tokio-lock-experiment ex.async-
+lock
+   Compiling tokio-lock-experiment v0.1.0 (/home/coriolinus/projects/coriolinus/tokio-lock-experiment)
+    Finished `release` profile [optimized] target(s) in 0.55s
+$ file ex.*
+ex.async-lock: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=21790d2150c653fb0b89b2dfbf4277fde32d0872, for GNU/Linux 3.2.0, not stripped
+ex.tokio:      ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=9097d32a203dc2c3ffa3dc777fceb4190cbf4be9, for GNU/Linux 3.2.0, not stripped
+$ ls -l ex.*
+-rwxr-xr-x 2 coriolinus coriolinus 800032 Nov 13 18:42 ex.async-lock
+-rwxr-xr-x 2 coriolinus coriolinus 800248 Nov 13 18:41 ex.tokio
+```
+
+No.
+
 ## Is there any significant performance difference?
 
 TBD
